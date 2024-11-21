@@ -1,0 +1,49 @@
+services:
+  # frontend:
+  #   build: ../client
+  #   networks:
+  #     - loadbalancing
+
+  backend_1:
+    build: ../server
+    env_file:
+      - ../server/.env
+    networks:
+      - loadbalancing
+
+  backend_2:
+    build: ../server
+    env_file:
+      - ../server/.env
+    networks:
+      - loadbalancing
+
+  backend_3:
+    build: ../server
+    env_file:
+      - ../server/.env
+    networks:
+      - loadbalancing
+
+  backend_4:
+    build: ../server
+    env_file:
+      - ../server/.env
+    networks:
+      - loadbalancing
+
+  nginx:
+    build: ../nginx
+    ports:
+      - "3000:80"
+    networks:
+      - loadbalancing
+    depends_on:
+      - backend_1
+      - backend_2
+      - backend_3
+      - backend_4
+
+networks:
+  loadbalancing:
+    driver: bridge
